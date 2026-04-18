@@ -187,7 +187,72 @@ Think beyond hardware. **Assets include anything attackers want or can abuse.**
 If it holds value, grants access, or provides privilege, it’s an asset. Assets are not limited to servers; accounts, access pathways, and cloud permissions are also considered assets.
 
 
+## 2. Identify Threats (What Could Go Wrong?)
 
+Threats answer the fundamental question: **“What could realistically go wrong?”**
+
+### How to Think About Threats
+To identify threats effectively, ask yourself:
+* **Who** would attack this?
+* **How** would they access it?
+* **What** attacks are common in the wild?
+
+> [!IMPORTANT]
+> Use real SOC (Security Operations Center) threat patterns, not "movie hackers." These threats are realistic and encountered daily by security professionals.
+
+### Identified Threats
+| Asset | Threat Scenario |
+| :--- | :--- |
+| **Public RDP** | Internet brute-force attacks |
+| **Admin account** | Password compromise |
+| **OS** | Exploitation of known vulnerabilities |
+| **Azure account** | Unauthorized configuration changes |
+| **Logs** | Undetected malicious activity |
+
+*Note: Threats can be both external and internal. GRC addresses both aspects.*
+
+---
+
+## 3. Identify Vulnerabilities (Why the Threat Could Work)
+
+Vulnerabilities are **weaknesses**, not attacks themselves. If something can be abused, it represents a vulnerability—you don't need to exploit it to prove it exists.
+
+### How to Identify Vulnerabilities
+
+#### A. Review Azure NSGs (Network Security Groups)
+1. Navigate to **GRC-WIN-VM01** → **Networking** → **Network Settings**.
+2. Verify if an NSG is attached to the network interface or subnet.
+3. Check for **Inbound Port Rules**:
+    * **Port:** RDP (TCP 3389)
+    * **Source:** `Any` or `Internet`
+    * **Action:** `Allow`
+
+> [!WARNING]
+> Allowing RDP access from the internet significantly increases the risk of brute-force attacks and must be documented as a high security risk.
+
+#### B. Check the Authentication Method (OS-Level)
+Inside the VM, open **Computer Management** → **Local Users and Groups** → **Users**:
+* **Confirm:** `azureadmin` exists.
+* **Confirm:** It is a member of the **Administrators** group.
+
+#### C. Confirm Monitoring is Enabled
+* **Azure Monitoring:** Go to **Monitoring** → **Insights**. If basic performance data isn't visible, Azure will prompt to enable it.
+* **OS-Level Logging:** Open **Event Viewer** → **Windows Logs** → **Security**. Confirm that events are being generated.
+
+#### D. Default OS Configuration
+This assessment assumes a standard **Windows Server 2022** setup with no additional hardening:
+* No custom Group Policies or CIS benchmarks.
+* Windows Defender and Firewall are on **default settings**.
+* No host-based security measures beyond the OS defaults.
+
+### Identified Vulnerabilities
+| Asset | Vulnerability | Why It Matters |
+| :--- | :--- | :--- |
+| **Virtual Machine (VM)** | RDP exposed to the internet | Increases attack surface |
+| **Authentication** | No MFA (Multi-Factor) | High risk of password compromise |
+| **Operating System** | Default hardening | Common target for automated exploits |
+| **Monitoring** | No SIEM integration | Attacks may go completely unnoticed |
+| **Identity** | Single admin account | No accountability or redundancy |
 
 
 
