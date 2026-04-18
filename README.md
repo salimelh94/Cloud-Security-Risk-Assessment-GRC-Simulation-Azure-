@@ -230,14 +230,28 @@ Vulnerabilities are **weaknesses**, not attacks themselves. If something can be 
 > [!WARNING]
 > Allowing RDP access from the internet significantly increases the risk of brute-force attacks and must be documented as a high security risk.
 
-#### B. Check the Authentication Method (OS-Level)
+   ![images alt](https://github.com/salimelh94/Cloud-Security-Risk-Assessment-GRC-Simulation-Azure-/blob/ae86bde367943c3ec3d454c5a4c37dbbf3ad6487/images/3-1.png)
+
+#### B. Check the Authentication Method
+## (OS-Level)
 Inside the VM, open **Computer Management** → **Local Users and Groups** → **Users**:
+
 * **Confirm:** `azureadmin` exists.
 * **Confirm:** It is a member of the **Administrators** group.
 
+ ![images alt](https://github.com/salimelh94/Cloud-Security-Risk-Assessment-GRC-Simulation-Azure-/blob/ae86bde367943c3ec3d454c5a4c37dbbf3ad6487/images/3-2.png)
+
 #### C. Confirm Monitoring is Enabled
+
 * **Azure Monitoring:** Go to **Monitoring** → **Insights**. If basic performance data isn't visible, Azure will prompt to enable it.
-* **OS-Level Logging:** Open **Event Viewer** → **Windows Logs** → **Security**. Confirm that events are being generated.
+
+  ![images alt](https://github.com/salimelh94/Cloud-Security-Risk-Assessment-GRC-Simulation-Azure-/blob/ae86bde367943c3ec3d454c5a4c37dbbf3ad6487/images/3-3.png)
+  
+* **OS-Level Logging:**
+   Open **Event Viewer** → **Windows Logs** → **Security**.
+  
+   Confirm that events are being generated.
+   ![images alt](https://github.com/salimelh94/Cloud-Security-Risk-Assessment-GRC-Simulation-Azure-/blob/ae86bde367943c3ec3d454c5a4c37dbbf3ad6487/images/3-4.png)
 
 #### D. Default OS Configuration
 This assessment assumes a standard **Windows Server 2022** setup with no additional hardening:
