@@ -339,11 +339,222 @@ The final stage is consolidating findings into a professional report. This docum
 *   **Accountability:** Provides a clear record of security decisions for auditors.
 
 
+# Risk Assessment Report
+
+## 1. Executive Summary
+This report summarizes the findings of a cloud security risk assessment conducted on a single Azure-hosted virtual machine from a **Governance, Risk, and Compliance (GRC)** perspective.
+
+The objective was to identify critical assets, evaluate potential threat scenarios, and quantify risks to recommend controls aligned with industry frameworks. The assessment identified several **medium-to-high risks**, primarily due to:
+*   Exposed remote access (RDP).
+*   Absence of Multi-Factor Authentication (MFA).
+*   Inadequate OS hardening.
+*   Limited centralized monitoring.
+
+---
+
+## 2. Scope and Environment
+The assessment was performed from a GRC (non-exploitative) perspective, focusing strictly on the following environment:
+
+| Item | Description |
+| :--- | :--- |
+| **Cloud Provider** | Microsoft Azure |
+| **Resource Group** | GRC-Lab |
+| **Virtual Machine Name** | GRC-WIN-VM01 |
+| **Operating System** | Windows Server 2022 Datacenter |
+| **Access Method** | Remote Desktop Protocol (RDP) |
+| **Public Exposure** | Yes (Public IP enabled) |
+| **Administrative Account** | `azureadmin` |
+
+---
+
+## 3. Asset, Threat, and Vulnerability Summary
+
+| Asset | Threat | Vulnerability | Why it Matters |
+| :--- | :--- | :--- | :--- |
+| **Azure VM** | Brute-force attack | RDP exposed to the internet | Easy entry point for attackers |
+| **Admin Account** | Credential theft | No MFA | Full system compromise possible |
+| **OS** | Exploitation | Default hardening | Common Windows attack vectors |
+| **Logs** | Undetected attacks | No centralized logging | Delayed detection of incidents |
+| **Azure Sub** | Misconfiguration | Single admin | High-impact if misused |
+
+---
+
+## 4. Risk Prioritization
+Risks were scored using the **Likelihood × Impact** model ($1 = Low$, $5 = High$).
+
+| Asset | Threat | Likelihood | Impact | Risk Score | Justification |
+| :--- | :--- | :---: | :---: | :---: | :--- |
+| **RDP** | Brute-force attack | 4 | 4 | **16** | Public exposure |
+| **Admin** | Credential compromise | 3 | 5 | **15** | Full system control |
+| **OS** | Unpatched vulnerabilities | 3 | 4 | **12** | Common Windows attack |
+| **Azure** | Privilege misuse | 2 | 5 | **10** | High-impact resource |
+| **Logs** | Undetected attack | 3 | 3 | **9** | Delayed response |
+
+---
+
+## 5. Security Controls & Compliance Mapping
+
+| Risk | Control | Control Type | Framework |
+| :--- | :--- | :--- | :--- |
+| **RDP attacks** | Restrict inbound IP access | Preventive | CIS 4 |
+| **Credential theft** | Enforce MFA | Preventive | NIST CSF PR.AC |
+| **OS exploits** | Patch management | Corrective | CIS 7 |
+| **Lack of logging** | Centralized logging | Detective | NIST CSF DE.CM |
+| **Privilege misuse** | RBAC enforcement | Preventive | CIS 5 |
+
+---
+
+## 6. Recommended Mitigation Actions
+
+> [!IMPORTANT]
+> The following actions should be prioritized to reduce the current risk posture:
+
+1.  **Restrict RDP access:** Use Network Security Groups (NSGs) to limit access only to trusted IP ranges.
+2.  **Enable MFA:** Enforce Multi-Factor Authentication for all administrative accounts.
+3.  **Patch Management:** Apply regular operating system patches and updates.
+4.  **Centralized Logging:** Enable **Azure Monitor** or **Microsoft Defender for Cloud** for logging and alerts.
+5.  **RBAC:** Implement Role-Based Access Control to ensure the principle of least privilege.
 
 
 
+# Template
+## Cloud Security Risk Assessment Report
+**Governance, Risk, and Compliance (GRC)**
 
+### 1. Executive Summary
 
+This report documents the results of a cloud security risk assessment conducted on a single Azure-hosted virtual machine from a Governance, Risk, and Compliance (GRC) perspective. The purpose of the assessment is to identify critical assets, evaluate realistic threat scenarios, assess vulnerabilities, quantify risk, and recommend security controls aligned with recognized industry frameworks.
+
+The assessment identified multiple medium to high risks, primarily related to exposed remote access, lack of multi-factor authentication, default operating system hardening, and limited centralized monitoring. While no active exploitation was observed during the assessment, these findings reflect common cloud misconfigurations that could be leveraged by attackers if left unaddressed.
+
+### 2. Scope and Environment
+
+**Assessment Scope**
+* Single Azure Virtual Machine
+* No additional cloud services or applications included
+* Assessment performed from a GRC (non-exploitative) perspective
+
+**Environment Details**
+| Items | Description |
+| :--- | :--- |
+| Cloud Provider | Microsoft Azure |
+| Resource Group | GRC-Lab |
+
+*Note: Define what you are assessing. Include the type of VM, OS, access method, and whether it’s publicly exposed. Think about what is in and out of scope.*
+
+### 3. Asset Identification
+
+The following assets were identified as part of the assessment. Assets include not only infrastructure, but also identities, access paths, and cloud control mechanisms.
+
+| Asset Category | Asset | Why it Matters |
+| :--- | :--- | :--- |
+| Compute | Azure Virtual Machine | Host's operating system and services |
+| Identity | Local Administrator Account | Grants full system control |
+
+*Note: List all valuable resources — not just hardware. Include accounts, network access points, cloud permissions, and anything attackers could abuse.*
+
+### 4. Threat and Vulnerability Summary
+
+This section links what could go wrong (threats) with why it could succeed (vulnerabilities).
+
+| Asset | Threat | Vulnerability | Why it Matters |
+| :--- | :--- | :--- | :--- |
+| Azure VM | Brute-force attack | RDP exposed to the internet | Common automated attacks |
+| Admin Account | Credential theft | No MFA | Full system compromise |
+
+*Note: For each asset, think about realistic threats (what could go wrong) and the vulnerabilities that make it possible (why it could succeed). Focus on common cloud attack scenarios.*
+
+### 5. Risk Assessment and Prioritization
+
+Risks were scored using a standard likelihood × impact model to enable consistent prioritization.
+
+**Risk Scoring Model**
+* Likelihood: 1 (Low) → 5 (High)
+* Impact: 1 (Low) → 5 (High)
+* Risk Score = Likelihood × Impact
+
+**Risk Register Table**
+| Asset | Threat | Likelihood | Impact | Risk Score | Justification |
+| :--- | :--- | :---: | :---: | :---: | :--- |
+| RDP | Brute-force attack | 4 | 4 | 16 | Public exposure |
+| Admin Account | Credential compromise | 3 | 5 | 15 | Full system access |
+
+**How to Fill Out the Risk Register**
+This section explains how to fill out the risk register table. The risk register takes the assets, threats, and vulnerabilities we identify and turns them into measurable risks. This helps management prioritize and address these risks effectively.
+
+**A. Asset**
+List the system, account, service, or access path being assessed. If it provides access, stores data, or grants control, it should be included as an asset.
+Examples:
+* RDP (3389)
+* Local Administrator Account
+* Azure Virtual Machine
+* Azure Subscription
+* Windows Event Logs
+
+**B. Threat**
+Describe a realistic threat scenario that could impact the asset. Threats should reflect common, real-world attack techniques seen in enterprise environments.
+Examples:
+* Brute-force attack
+* Credential compromise
+* Unauthorized configuration changes
+* Exploitation of known vulnerabilities
+* Undetected malicious activity
+
+**C. Likelihood**
+Assess the likelihood of the threat occurring in the current environment by considering factors such as internet exposure, frequency of this attack type, ease of exploitation, and existing security controls.
+| Score | Description |
+| :---: | :--- |
+| 1 | Rare |
+| 2 | Unlikely |
+| 3 | Possible |
+| 4 | Likely |
+| 5 | Almost Certain |
+
+**D. Impact**
+Evaluate the severity of impact if the threat is successfully exploited by considering the following factors: loss of confidentiality, integrity, or availability; the level of access gained (user vs. administrator); operational disruption; and potential compliance or reputational damage.
+| Score | Description |
+| :---: | :--- |
+| 1 | Minimal Impact |
+| 2 | Minor Impact |
+| 3 | Moderate Impact |
+| 4 | High Impact |
+| 5 | Critical Impact |
+
+**E. Risk Score**
+Calculate the risk score by multiplying likelihood by impact.
+Example: Likelihood 4 × Impact 4 = 16
+
+**F. Justification**
+Provide a brief explanation to support the likelihood and impact scores. This field is essential for auditability. Justifications for scores must be provided, not assumed.
+Examples:
+* “RDP is publicly exposed and commonly targeted by automated brute-force attacks.”
+* “Compromise of an administrator account would grant full system control.”
+* “Lack of centralized logging increases time to detect malicious activity.”
+
+### 6. Security Controls and Compliance Mapping
+
+Identified risks were mapped to preventive, detective, and corrective controls aligned with recognized frameworks.
+
+| Risk | Security Control | Control Type | Framework |
+| :--- | :--- | :--- | :--- |
+| RDP attacks | Restrict inbound IP access | Preventive | CIS Control 4 |
+| Credential theft | Enforce MFA | Preventive | NIST CSF PR.AC |
+
+*Note: For each identified risk, select controls that reduce it. Categorize them as Preventive (stop it), Detective (detect it), or Corrective (fix it after it happens). Then map each control to a recognized framework (e.g., NIST CSF or CIS Controls) to ensure auditability and governance alignment. Focus on whether the control meets the framework’s intent, not the specific tool.*
+
+### 7. Recommended Mitigation Actions
+
+The following actions are recommended to reduce overall risk:
+* Restrict RDP access via Network Security Groups to trusted IP ranges
+* Enable multi-factor authentication for all administrative accounts
+* Apply regular operating system patches and updates
+* Enable Azure Monitor or Defender for centralized logging and alerts
+* Implement role-based access control (RBAC) for Azure resources
+
+*Note: Suggest clear, actionable steps to reduce each risk. Make them measurable and specific, e.g., enable MFA, restrict RDP access, apply patches, enable logging, and enforce RBAC.*
+
+### 8. Overall Risk Posture
+Based on the findings, the overall risk posture of the assessed environment is Medium to High. While the environment is small, the presence of exposed access paths and limited monitoring significantly increases risk.
 
 
 
