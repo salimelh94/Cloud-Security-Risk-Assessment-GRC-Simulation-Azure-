@@ -124,7 +124,67 @@ Click Review + Create → Create
 In GRC, you define the scope first. This VM is now your entire assessment scope, just as a real risk assessment for a small cloud workload would be.
 
 
+# Instructions
 
+## Step 1: Identify Assets, Threats, and Vulnerabilities (Core GRC Skill)
+
+This is the most important step in GRC. If Step 1 is weak, everything else falls apart. We’ll do this in three layers: Assets, Threats, and Vulnerabilities.
+
+This step answers three critical questions:
+
+* What do we care about?
+* What could harm it?
+* Why could that harm succeed?
+
+### 1. Identify Assets (What Are We Protecting?)
+
+Think: “What would hurt if compromised?”
+
+#### How to Do This
+
+1. **Navigate to:**
+    * Virtual Machines → GRC-WIN-VM01
+
+2. **Look at:**
+
+    **A. Settings → Operating System**
+
+      ![images alt](https://github.com/salimelh94/Cloud-Security-Risk-Assessment-GRC-Simulation-Azure-/blob/00ceb8ea2ba7259b75659f8c6f66ead676400784/images/2-1.png)
+   
+    Confirm the operating system running on the VM for asset inventory and risk classification.
+
+    **B. Networking → Network Setting → Rules → Open ports**
+
+     ![images alt](https://github.com/salimelh94/Cloud-Security-Risk-Assessment-GRC-Simulation-Azure-/blob/00ceb8ea2ba7259b75659f8c6f66ead676400784/images/2-2.png)
+
+    Identify externally accessible services that increase the attack surface.
+
+    **C. Admin Accounts: Operations → Run Command → Choose RunPowerShellScript**
+    Type `Get-LocalUser` and click **Run**.
+   
+     ![images alt](https://github.com/salimelh94/Cloud-Security-Risk-Assessment-GRC-Simulation-Azure-/blob/00ceb8ea2ba7259b75659f8c6f66ead676400784/images/2-3.png)
+
+     Identify privileged accounts with elevated access to the system.
+
+    **D. Public Exposure**
+
+     ![images alt](https://github.com/salimelh94/Cloud-Security-Risk-Assessment-GRC-Simulation-Azure-/blob/00ceb8ea2ba7259b75659f8c6f66ead676400784/images/2-4.png)
+
+    Determine whether the VM is accessible from the internet.
+
+Think beyond hardware. **Assets include anything attackers want or can abuse.**
+
+### Identified Assets
+
+| Asset Category | Asset | Why It Matters |
+| :--- | :--- | :--- |
+| Compute | Azure VM (Windows Server 2022) | Hosts data & services |
+| Identity | Local Admin Account | Full system control |
+| Network | Public IP & RDP Port | Entry point for attackers |
+| Cloud Control | Azure Subscription | Management & billing access |
+| OS | Windows Services | Vulnerable if unpatched |
+
+If it holds value, grants access, or provides privilege, it’s an asset. Assets are not limited to servers; accounts, access pathways, and cloud permissions are also considered assets.
 
 
 
