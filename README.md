@@ -558,7 +558,9 @@ Based on the findings, the overall risk posture of the assessed environment is M
 
 
 
-
+## Lessons Learned: 
+This project demonstrated that cloud security is as much about governance as it is about technical configuration. I learned that identifying a vulnerability is only the first step; the real value lies in quantifying its business impact and mapping mitigations to industry frameworks like NIST and CIS.
+This simulation reinforced the importance of continuous monitoring and the principle of least privilege, proving that a structured GRC approach is essential for transforming technical findings into actionable, defensible security strategies in a real-world enterprise.
 
 
 
