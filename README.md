@@ -270,8 +270,73 @@ This assessment assumes a standard **Windows Server 2022** setup with no additio
 
 
 
+## Step 2: Assign Risk Scores (Quantifying Risk)
 
+Risk scoring translates technical weaknesses into a format that leadership can prioritize. Instead of subjective labels, we use a repeatable mathematical model.
 
+### Risk Scoring Method
+*   **Likelihood (1-5):** How probable is it that the threat will occur?
+*   **Impact (1-5):** The severity of damage if the threat is realized.
+*   **Risk Score:** $Likelihood \times Impact$
+
+---
+
+### A. How to Assign Likelihood
+Consider these factors:
+*   **Exposure:** Is it accessible from the internet (e.g., public IP)?
+*   **Threat Prevalence:** Is this a commonly observed attack technique?
+*   **Ease of Exploitation:** Can it be automated or does it require advanced skills?
+*   **Existing Controls:** Are there any defenses already in place?
+
+### B. How to Assign Impact
+Ask the following:
+*   Would this result in data loss or exposure?
+*   Could it lead to full system or domain compromise?
+*   Would it cause service downtime?
+*   What is the impact on compliance and reputation?
+
+### Risk Register (Core GRC Artifact)
+| Asset | Threat | Likelihood | Impact | Risk Score | Justification |
+| :--- | :--- | :---: | :---: | :---: | :--- |
+| **RDP** | Brute-force attack | 4 | 4 | **16** | Public Exposure |
+| **Admin** | Credential compromise | 3 | 5 | **15** | Full System Control |
+| **OS** | Unpatched vulnerabilities | 3 | 4 | **12** | Common Windows Attack |
+| **Azure** | Privilege misuse | 2 | 5 | **10** | High Impact |
+| **Logs** | Undetected attack | 3 | 3 | **9** | Delayed Responses |
+
+---
+
+## Step 3: Map Controls to Policies & Frameworks
+
+This step ensures every security action is justified and traceable to industry standards like **NIST CSF** or **CIS Controls**.
+
+### Control Types
+1.  **Preventive:** Stop attacks before they happen (e.g., MFA).
+2.  **Detective:** Identify and alert on malicious activity (e.g., Logging).
+3.  **Corrective:** Mitigate impact after an incident (e.g., Patching).
+
+### Control Mapping Table
+| Risk | Security Control | Control Type | Framework |
+| :--- | :--- | :--- | :--- |
+| **RDP attacks** | Restrict IP access | Preventive | CIS 4 |
+| **Credential theft** | MFA enforcement | Preventive | NIST PR.AC |
+| **OS exploits** | Patch management | Corrective | CIS 7 |
+| **No detection** | Centralized logging | Detective | NIST DE.CM |
+| **Privilege misuse** | RBAC | Preventive | CIS 5 |
+
+> [!TIP]
+> In GRC, **traceability** matters more than the specific tool. Whether you use Azure Native tools or third-party software, the control must fulfill the framework's intent.
+
+---
+
+## Step 4: Produce a GRC Risk Assessment Report
+
+The final stage is consolidating findings into a professional report. This document bridges the gap between technical teams and stakeholders.
+
+### Report Objectives:
+*   **Clarity:** Readable by both technical and non-technical staff.
+*   **Structure:** Logical flow from Asset identification to Mitigation.
+*   **Accountability:** Provides a clear record of security decisions for auditors.
 
 
 
